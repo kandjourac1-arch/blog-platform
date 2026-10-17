@@ -1,0 +1,32 @@
+// Simple client-side search (title + excerpt)
+const index = [
+  {slug: '/articles/001-ia-generative-effets-marche-travail.html', title: "L'IA générative et ses effets structurels sur le marché du travail", excerpt: "Analyse des transformations que l'IA générative impose aux compétences, aux modèles d'emploi et aux politiques publiques."},
+  {slug: '/articles/002-transition-energetique-europe.html', title: 'Transition énergétique en Europe : progrès, blocages et scénarios', excerpt: 'Bilan analytique des politiques énergétiques européennes.'},
+  {slug: '/articles/003-crise-energetique-mondiale.html', title: 'Crise énergétique mondiale : dépendances, géopolitique et pistes de résilience', excerpt: 'Analyse des tensions sur les marchés de l\'énergie.'},
+  {slug: '/articles/004-sante-publique-apres-pandemie.html', title: 'Santé publique après la pandémie : leçons et priorités pour les systèmes de soins', excerpt: 'Synthèse des enseignements des dernières crises sanitaires.'},
+  {slug: '/articles/005-cybersecurite-processus-electoraux.html', title: 'Cyber-sécurité et processus électoraux : risques et réponses démocratiques', excerpt: 'Évaluation des menaces numériques pesant sur les élections.'},
+  {slug: '/articles/006-regulation-ia-internationale.html', title: "La régulation de l'IA à l'échelle internationale", excerpt: 'Panorama des efforts internationaux pour encadrer l\'IA.'},
+  {slug: '/articles/007-inflation-politiques-monétaires.html', title: 'Inflation et politiques monétaires : état des lieux', excerpt: 'Analyse des trajectoires inflationnistes récentes.'},
+  {slug: '/articles/008-criminalite-financiere-nouvelles-technologies.html', title: 'Criminalité financière et nouvelles technologies', excerpt: 'Comment la numérisation facilite certains types de fraudes.'},
+  {slug: '/articles/009-education-inegalites-tech.html', title: 'Éducation et inégalités : l\'impact des technologies éducatives', excerpt: 'Les EdTech peuvent réduire ou amplifier les inégalités.'},
+  {slug: '/articles/010-banques-centrales-transition-verte.html', title: 'Rôle des banques centrales dans la transition verte', excerpt: 'Examens des instruments monétaires pour soutenir la décarbonation.'}
+];
+
+const input = document.getElementById('searchInput');
+const list = document.getElementById('articlesList');
+
+input.addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  if (!q) {
+    // show all
+    document.querySelectorAll('.card').forEach(c => c.style.display='block');
+    return;
+  }
+  document.querySelectorAll('.card').forEach(c => c.style.display='none');
+  const results = index.filter(item => (item.title + ' ' + item.excerpt).toLowerCase().includes(q));
+  results.forEach(r => {
+    const selector = `a.card-link[href$="${r.slug}"]`;
+    const el = document.querySelector(selector);
+    if (el) el.closest('.card').style.display='block';
+  });
+});
